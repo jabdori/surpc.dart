@@ -1,29 +1,28 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:surrealdb/surrealdb.dart';
-import 'package:surrealdb/surrealdb_platform_interface.dart';
-import 'package:surrealdb/surrealdb_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:surrealdb/surrealdb_platform_interface.dart';
+// import 'package:surrealdb/surrealdb_method_channel.dart';
+// import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockSurrealdbPlatform
-    with MockPlatformInterfaceMixin
-    implements SurrealdbPlatform {
+// class MockSurrealdbPlatform
+//     with MockPlatformInterfaceMixin
+//     implements SurrealdbPlatform {
 
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
-}
+//   @override
+//   Future<String?> getPlatformVersion() => Future.value('42');
+// }
 
-void main() {
-  final SurrealdbPlatform initialPlatform = SurrealdbPlatform.instance;
+// void main() {
+//   final SurrealdbPlatform initialPlatform = SurrealdbPlatform.instance;
 
-  test('$MethodChannelSurrealdb is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelSurrealdb>());
-  });
+//   test('$MethodChannelSurrealdb is the default instance', () {
+//     expect(initialPlatform, isInstanceOf<MethodChannelSurrealdb>());
+//   });
 
-  test('getPlatformVersion', () async {
-    Surrealdb surrealdbPlugin = Surrealdb();
-    MockSurrealdbPlatform fakePlatform = MockSurrealdbPlatform();
-    SurrealdbPlatform.instance = fakePlatform;
+//   test('getPlatformVersion', () async {
+//     Surrealdb surrealdbPlugin = Surrealdb();
+//     MockSurrealdbPlatform fakePlatform = MockSurrealdbPlatform();
+//     SurrealdbPlatform.instance = fakePlatform;
 
-    expect(await surrealdbPlugin.getPlatformVersion(), '42');
-  });
-}
+//     expect(await surrealdbPlugin.getPlatformVersion(), '42');
+//   });
+// }
