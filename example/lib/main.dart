@@ -58,9 +58,9 @@ class _MyAppState extends State<MyApp> {
   final String _platformVersion = 'Unknown';
   final _surrealdbPlugin = SurrealDB();
 
-  final Receive _receive = Receive(
+  final Receive _receive = const Receive(
     id: '1',
-    action: DBAction.create,
+    action: LiveAction.create,
     result: 'result',
     error: 'error',
     status: 'status',
@@ -103,7 +103,10 @@ class _MyAppState extends State<MyApp> {
         //   options: auth.toJson(),
         // );
         // debugPrint('Token: $token');
-        final token = await _surrealdbPlugin.signIn(sc: 'users', options: auth.toJson(),);
+        final token = await _surrealdbPlugin.signIn(
+          sc: 'users',
+          options: auth.toJson(),
+        );
         debugPrint('Token: $token');
 
         // final u1 = User(email: 'a', sub: 'a', provider: 'a');
@@ -148,11 +151,10 @@ class _MyAppState extends State<MyApp> {
         // debugPrint('Transaction Query: ${txQuer.map((e) => e)}');
         //
 
-        final live = await _surrealdbPlugin.liveQuery(
-          r'live select * from user'
-        );
+        final live =
+            await _surrealdbPlugin.liveQuery(r'live select * from user');
         debugPrint('Live Query: $live');
-        
+
         live.listen<User>((action, data) {
           debugPrint('Live Action: $action');
           debugPrint('Live Data: ${data.toString()}');

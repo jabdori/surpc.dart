@@ -36,7 +36,7 @@ abstract class SurrealDBClientInterface {
   Future<List<T>> insert<T>(String path,
       {List<DataMap>? data, FromJson<T>? fromJson});
 
-  Future<T> update<T>(String path, DataMap data, {FromJson<T>? fromJson});
+  Future<List<T>> update<T>(String path, DataMap data, {FromJson<T>? fromJson});
 
   Future<List<T>> merge<T>(String path, DataMap data, {FromJson<T>? fromJson});
 

@@ -11,6 +11,7 @@ import 'package:surrealdb/src/common/models/websocket_state.dart';
 import 'package:surrealdb/src/common/typedefs.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+// ignore: constant_identifier_names
 const ERR = "ERR";
 
 class SurrealDB implements SurrealDBClientInterface {
@@ -40,12 +41,14 @@ class SurrealDB implements SurrealDBClientInterface {
       Uri.parse('${secure ? 'wss://' : 'ws://'}$host:$port/rpc'),
     );
 
-    debugPrint('WebSocketUri: ${Uri.parse('${secure ? 'wss://' : 'ws://'}$host:$port/rpc')}');
+    debugPrint(
+        'WebSocketUri: ${Uri.parse('${secure ? 'wss://' : 'ws://'}$host:$port/rpc')}');
 
     await _channel.ready.then(
       (value) => state.value = WebsocketState.connected,
       onError: (error) {
         state.value = WebsocketState.disconnected;
+        throw Exception('Failed to connect to SurrealDB: $error');
       },
     );
 
@@ -193,7 +196,6 @@ class SurrealDB implements SurrealDBClientInterface {
   Future<LiveQuery> liveQuery(String liveQuery, {DataMap? vars}) async {
     final recv = await query(liveQuery, vars: vars);
     return LiveQuery.create(recv.first as String, surrealDB: this);
-
   }
 
   @override
@@ -214,6 +216,8 @@ class SurrealDB implements SurrealDBClientInterface {
         return (recv.result as List)
             .map((e) => fromJson(e as DataMap))
             .toList();
+      } else {
+        return [fromJson(recv.result as DataMap)];
       }
     }
     return recv.result as List<T>;
@@ -326,7 +330,7 @@ class SurrealDB implements SurrealDBClientInterface {
   }
 
   @override
-  Future<T> update<T>(
+  Future<List<T>> update<T>(
     String path,
     DataMap data, {
     FromJson<T>? fromJson,
@@ -345,13 +349,12 @@ class SurrealDB implements SurrealDBClientInterface {
       if (recv.result is List) {
         return (recv.result as List)
             .map((e) => fromJson(e as DataMap))
-            .toList()
-            .first;
+            .toList();
       } else {
-        return fromJson(recv.result as DataMap);
+        return [fromJson(recv.result as DataMap)];
       }
     }
-    return recv.result as T;
+    return recv.result as List<T>;
   }
 
   @override
@@ -415,7 +418,7 @@ class LiveQuery {
   late SurrealDB _surrealDB;
   late final StreamSubscription _subscription;
 
-  LiveQuery({required this.id, this.query, required SurrealDB surrealDB}){
+  LiveQuery({required this.id, this.query, required SurrealDB surrealDB}) {
     _surrealDB = surrealDB;
   }
 
@@ -426,30 +429,31 @@ class LiveQuery {
     return LiveQuery(id: id, surrealDB: surrealDB);
   }
 
-  void listen<T>(void Function(DBAction action, T data) callback, {List<DBAction>? actions, FromJson<T>? fromJson}) {
+  void listen<T>(void Function(LiveAction action, T data) callback,
+      {List<LiveAction>? allowActions, FromJson<T>? fromJson, debug = false}) {
     _subscription = _surrealDB.stream.where((msg) {
       try {
         final receive = Receive.fromJson(jsonDecode(msg));
         final receiveResult = Receive.fromJson(receive.result! as DataMap);
         return receiveResult.id == id;
-      }
-      catch (error) {
+      } catch (error) {
         return false;
       }
     }).listen((msg) {
       final receive = Receive.fromJson(jsonDecode(msg));
       final receiveResult = Receive.fromJson(receive.result as DataMap);
 
-      if (actions != null && actions.contains(receiveResult.action)) {
+      if (allowActions != null && allowActions.contains(receiveResult.action)) {
         if (fromJson != null) {
-          callback(receiveResult.action!, fromJson(receiveResult.result as DataMap));
+          callback(
+              receiveResult.action!, fromJson(receiveResult.result as DataMap));
         } else {
           callback(receiveResult.action!, receiveResult.result as T);
         }
-      }
-      else if (actions == null) {
+      } else if (allowActions == null) {
         if (fromJson != null) {
-          callback(receiveResult.action!, fromJson(receiveResult.result as DataMap));
+          callback(
+              receiveResult.action!, fromJson(receiveResult.result as DataMap));
         } else {
           callback(receiveResult.action!, receiveResult.result as T);
         }

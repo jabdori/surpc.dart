@@ -5,7 +5,7 @@ part 'receive.freezed.dart';
 
 part 'receive.g.dart';
 
-enum DBAction {
+enum LiveAction {
   @JsonValue('DELETE')
   delete,
   @JsonValue('CREATE')
@@ -19,7 +19,7 @@ class Receive with _$Receive {
   @JsonSerializable(includeIfNull: false)
   const factory Receive({
     ID? id,
-    DBAction? action,
+    LiveAction? action,
     Object? result,
     Object? error,
     String? status,

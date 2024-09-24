@@ -9,7 +9,7 @@ part of 'receive.dart';
 _$ReceiveImpl _$$ReceiveImplFromJson(Map<String, dynamic> json) =>
     _$ReceiveImpl(
       id: json['id'] as String?,
-      action: $enumDecodeNullable(_$DBActionEnumMap, json['action']),
+      action: $enumDecodeNullable(_$LiveActionEnumMap, json['action']),
       result: json['result'],
       error: json['error'],
       status: json['status'] as String?,
@@ -26,7 +26,7 @@ Map<String, dynamic> _$$ReceiveImplToJson(_$ReceiveImpl instance) {
   }
 
   writeNotNull('id', instance.id);
-  writeNotNull('action', _$DBActionEnumMap[instance.action]);
+  writeNotNull('action', _$LiveActionEnumMap[instance.action]);
   writeNotNull('result', instance.result);
   writeNotNull('error', instance.error);
   writeNotNull('status', instance.status);
@@ -34,8 +34,8 @@ Map<String, dynamic> _$$ReceiveImplToJson(_$ReceiveImpl instance) {
   return val;
 }
 
-const _$DBActionEnumMap = {
-  DBAction.delete: 'DELETE',
-  DBAction.create: 'CREATE',
-  DBAction.update: 'UPDATE',
+const _$LiveActionEnumMap = {
+  LiveAction.delete: 'DELETE',
+  LiveAction.create: 'CREATE',
+  LiveAction.update: 'UPDATE',
 };

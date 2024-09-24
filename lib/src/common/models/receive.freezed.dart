@@ -21,7 +21,7 @@ Receive _$ReceiveFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Receive {
   String? get id => throw _privateConstructorUsedError;
-  DBAction? get action => throw _privateConstructorUsedError;
+  LiveAction? get action => throw _privateConstructorUsedError;
   Object? get result => throw _privateConstructorUsedError;
   Object? get error => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $ReceiveCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      DBAction? action,
+      LiveAction? action,
       Object? result,
       Object? error,
       String? status,
@@ -74,7 +74,7 @@ class _$ReceiveCopyWithImpl<$Res, $Val extends Receive>
       action: freezed == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as DBAction?,
+              as LiveAction?,
       result: freezed == result ? _value.result : result,
       error: freezed == error ? _value.error : error,
       status: freezed == status
@@ -98,7 +98,7 @@ abstract class _$$ReceiveImplCopyWith<$Res> implements $ReceiveCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      DBAction? action,
+      LiveAction? action,
       Object? result,
       Object? error,
       String? status,
@@ -131,7 +131,7 @@ class __$$ReceiveImplCopyWithImpl<$Res>
       action: freezed == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as DBAction?,
+              as LiveAction?,
       result: freezed == result ? _value.result : result,
       error: freezed == error ? _value.error : error,
       status: freezed == status
@@ -159,7 +159,7 @@ class _$ReceiveImpl implements _Receive {
   @override
   final String? id;
   @override
-  final DBAction? action;
+  final LiveAction? action;
   @override
   final Object? result;
   @override
@@ -215,7 +215,7 @@ class _$ReceiveImpl implements _Receive {
 abstract class _Receive implements Receive {
   const factory _Receive(
       {final String? id,
-      final DBAction? action,
+      final LiveAction? action,
       final Object? result,
       final Object? error,
       final String? status,
@@ -226,7 +226,7 @@ abstract class _Receive implements Receive {
   @override
   String? get id;
   @override
-  DBAction? get action;
+  LiveAction? get action;
   @override
   Object? get result;
   @override
