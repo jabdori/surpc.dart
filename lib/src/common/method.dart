@@ -2,6 +2,7 @@ enum Method {
   ping,
   use,
   info,
+  version,
   signup,
   signin,
   authenticate,
@@ -11,10 +12,15 @@ enum Method {
   live,
   kill,
   query,
+  graphql,
+  run,
   select,
   create,
   insert,
+  insertRelation,
   update,
+  upsert,
+  relate,
   merge,
   patch,
   delete;
@@ -27,6 +33,8 @@ enum Method {
         return 'use';
       case Method.info:
         return 'info';
+      case Method.version:
+        return 'version';
       case Method.signup:
         return 'signup';
       case Method.signin:
@@ -45,14 +53,24 @@ enum Method {
         return 'kill';
       case Method.query:
         return 'query';
+      case Method.graphql:
+        return 'graphql';
+      case Method.run:
+        return 'run';
       case Method.select:
         return 'select';
       case Method.create:
         return 'create';
       case Method.insert:
         return 'insert';
+      case Method.insertRelation:
+        return 'insert_relation';
       case Method.update:
         return 'update';
+      case Method.upsert:
+        return 'upsert';
+      case Method.relate:
+        return 'relate';
       case Method.merge:
         return 'merge';
       case Method.patch:

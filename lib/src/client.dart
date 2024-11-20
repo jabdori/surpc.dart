@@ -37,6 +37,8 @@ class SurrealDB implements SurrealDBClientInterface {
       {required String host, int? port, bool secure = false}) async {
     state.value = WebsocketState.connecting;
 
+    port ??= secure ? 443 : 80;
+
     _channel = WebSocketChannel.connect(
       Uri.parse('${secure ? 'wss://' : 'ws://'}$host:$port/rpc'),
     );
